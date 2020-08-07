@@ -4,6 +4,12 @@ window.browser = (function () {
         window.chrome;
 })();
 
+function updateElement(node, text) {
+	while(node.firstChild) {
+		node.removeChild(node.firstChild);
+	}
+	node.appendChild(document.createTextNode(text));	
+}
 
 browser.tabs.query({active: true, currentWindow:true}, function(tabs) {
 	let url = tabs[0].url;
@@ -29,10 +35,10 @@ browser.tabs.query({active: true, currentWindow:true}, function(tabs) {
 				let minutes = (msg.result.totalTime / 1000) / 60;
 					
 				// Show the data we found
-				document.getElementById('views').innerHTML = msg.result.views;
-				document.getElementById('to completion').innerHTML = msg.result.toCompletion;
-				document.getElementById('total watch time').innerHTML = Math.floor(minutes);
-				document.getElementById('average watch time').innerHTML = Math.floor(minutes / msg.result.views);
+				updateElement(document.getElementById('views'), msg.result.views);
+				updateElement(document.getElementById('to completion'), msg.result.toCompletion);
+				updateElement(document.getElementById('total watch time'), Math.floor(minutes));
+				updateElement(document.getElementById('average watch time'), Math.floor(minutes / msg.result.views));
 		  }
 		});
 	} 
