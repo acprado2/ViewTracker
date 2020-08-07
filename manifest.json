@@ -2,7 +2,7 @@
   "manifest_version": 2,
   
   "name": "View Tracker",
-  "version": "1.0",
+  "version": "1.01",
   "description": "Simple extension for tracking how often you've watched a video",
 
   "icons": {
