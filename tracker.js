@@ -1,3 +1,10 @@
+window.browser = (function () {
+    return window.msBrowser ||
+        window.browser ||
+        window.chrome;
+})();
+
+
 let video = document.querySelector('video');
 let url = '';
 let isFirstPlay = false;
