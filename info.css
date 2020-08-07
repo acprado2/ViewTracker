@@ -1,0 +1,32 @@
+body {
+	margin: 0;
+	font-family: Arial;
+	line-height: 2;
+	color: #000;
+}
+
+header {
+	text-align:center;
+	padding: 5px 10px 0px 10px;
+	font-family: impact;
+	font-size: 32px;
+}
+
+.info {
+	text-align: left-side;
+	padding: 5px 30px;
+	font-size: 20px;
+	cursor: default;
+	width: 20em;
+}
+
+.info b {
+	font-family: "Arial Black";
+	font-size: 32px;
+	color: #1cb863
+}
+
+.info:hover {
+	background: #565656;
+	color: #fff;
+}
