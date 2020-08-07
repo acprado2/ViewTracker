@@ -7,7 +7,7 @@ window.browser = (function () {
 
 let video = document.querySelector('video');
 let url = '';
-let isFirstPlay = false;
+let isFirstPlay = true;
 let isLoaded = false;
 let watchTime = 0.0;
 let playStart = 0.0;
@@ -124,6 +124,11 @@ function onUnload() {
 
 // Create or update video data for a url
 function updateVideoData(url, views, toCompletion, totalTime) {
+	// Throw out any invalid queries
+	if (url === '') {
+		return;
+	}
+	
 	// IndexedDB
 	let db
 	let request = indexedDB.open('viewtracker', 1);
@@ -229,6 +234,25 @@ function onVideoElementLoad() {
 			updateVideoData(url, 1, isToCompletion ? 1 : 0, watchTime);
 			watchTime = 0.0;
 			playStart = Date.now(); 
+		}
+	});
+	
+	// Timeupdate is called extremely frequently so use this to catch ourselves in case
+	// we can't immediately grab the video element on page load (looking at you Chrome!)
+	video.addEventListener('timeupdate', function(event) {
+		if (isFirstPlay && video.currentTime !== 0) {
+			onLoad();
+			
+			// Check if we missed the durationchange event
+			if (duration === 0) {
+				duration = video.duration;
+			}
+			
+			// Start time isn't completely accurate but it should be close enough
+			playStart = Date.now();
+			
+			updateVideoData(url, 1, 0, 0.0);
+			isFirstPlay = false;
 		}
 	});
 	
